@@ -66,6 +66,9 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body)
+      {
+        title: params[:post][:title],
+        body: helpers.sanitize(params[:post][:body])
+      }
     end
 end
