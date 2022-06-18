@@ -61,11 +61,14 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.where("id = #{params[:id]}").first
+      @post = Post.where(id: params[:id]).first
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body)
+      {
+        title: helpers.sanitize(params[:post][:title]),
+        body: helpers.sanitize(params[:post][:body])
+      }
     end
 end
